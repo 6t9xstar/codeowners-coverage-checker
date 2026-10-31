@@ -78,7 +78,12 @@ src/api/server.ts  @acme/backend @alice  .github/CODEOWNERS:5 /src/api/
 
 ## Install
 
-Requires Node.js 18.17+ and git.
+**Requirements**
+
+- Node.js 18.17 or newer
+- git (to install straight from GitHub)
+- Windows, macOS or Linux
+- No runtime dependencies. A `GITHUB_TOKEN` is only needed for `--github --check-access`.
 
 ```bash
 npx github:6t9xstar/codeowners-coverage-checker              # run once
