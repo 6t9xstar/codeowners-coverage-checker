@@ -1,0 +1,53 @@
+name: 'OwnerScope'
+description: 'Validate GitHub CODEOWNERS and measure code ownership coverage.'
+author: '6t9xstar'
+branding:
+  icon: 'users'
+  color: 'orange'
+inputs:
+  root:
+    description: "Repository root"
+    required: false
+    default: "."
+  fail-under:
+    description: "Fail when ownership coverage (%) is below this value"
+    required: false
+    default: ""
+  github-validation:
+    description: "Also validate owners with the GitHub API"
+    required: false
+    default: "false"
+  token:
+    description: "Token for --github validation"
+    required: false
+    default: "${{ github.token }}"
+  fail-on:
+    description: "Lowest severity that fails the step: error, warning, info or none"
+    required: false
+    default: "error"
+  args:
+    description: "Extra command-line arguments"
+    required: false
+    default: ""
+runs:
+  using: composite
+  steps:
+    - name: Run OwnerScope
+      shell: bash
+      env:
+        INPUT_ROOT: ${{ inputs.root }}
+        INPUT_FAIL_UNDER: ${{ inputs.fail-under }}
+        INPUT_GITHUB_VALIDATION: ${{ inputs.github-validation }}
+        INPUT_TOKEN: ${{ inputs.token }}
+        INPUT_FAIL_ON: ${{ inputs.fail-on }}
+        INPUT_ARGS: ${{ inputs.args }}
+        GITHUB_TOKEN: ${{ inputs.token }}
+      run: |
+        set -euo pipefail
+        ARGS=(scan --root "$INPUT_ROOT")
+        if [ -n "$INPUT_FAIL_UNDER" ]; then ARGS+=(--fail-under "$INPUT_FAIL_UNDER"); fi
+        if [ "$INPUT_GITHUB_VALIDATION" = "true" ]; then ARGS+=(--github --repo "$GITHUB_REPOSITORY"); fi
+        read -r -a EXTRA <<< "$INPUT_ARGS"
+        CLI="$GITHUB_ACTION_PATH/bin/ownerscope.js"
+        node "$CLI" "${ARGS[@]}" ${EXTRA[@]+"${EXTRA[@]}"} --format markdown --fail-on none >> "$GITHUB_STEP_SUMMARY" || true
+        node "$CLI" "${ARGS[@]}" ${EXTRA[@]+"${EXTRA[@]}"} --format github --fail-on "$INPUT_FAIL_ON"

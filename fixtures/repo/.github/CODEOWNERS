@@ -1,0 +1,15 @@
+# Default owners
+*.md            @acme/docs
+
+# Application code
+/src/api/       @acme/backend @alice
+/src/web/       @acme/frontend
+/src/web/       @acme/frontend-core
+docs/*          @acme/docs
+/infra/         @acme/platform
+/scripts/       bob-without-at
+!/src/legacy/   @acme/backend
+/src/api/*.ts   @alice @alice
+/build/logs/    @acme/platform
+*               @acme/maintainers
+/package.json

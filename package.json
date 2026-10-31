@@ -1,0 +1,46 @@
+{
+  "name": "ownerscope",
+  "version": "1.0.0",
+  "description": "GitHub CODEOWNERS validator and coverage checker. Finds files without code owners, rules that match nothing, shadowed rules and invalid owners, with a per-directory ownership report.",
+  "type": "module",
+  "bin": {
+    "ownerscope": "bin/ownerscope.js"
+  },
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "files": [
+    "bin",
+    "src",
+    "action.yml"
+  ],
+  "engines": {
+    "node": ">=18.17"
+  },
+  "scripts": {
+    "test": "node --test"
+  },
+  "keywords": [
+    "codeowners",
+    "github",
+    "code-owners",
+    "code-review",
+    "coverage",
+    "validator",
+    "linter",
+    "ownership",
+    "cli",
+    "github-action",
+    "codeowners validator"
+  ],
+  "author": "6t9xstar",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/6t9xstar/codeowners-coverage-checker.git"
+  },
+  "homepage": "https://github.com/6t9xstar/codeowners-coverage-checker#readme",
+  "bugs": {
+    "url": "https://github.com/6t9xstar/codeowners-coverage-checker/issues"
+  }
+}
